@@ -10,26 +10,24 @@
  * @return {number}
  */
 var openLock = function (deadends, target) {
+    // Depth first search folloving all possible combinations.
     if (deadends.some(x => x === "0000") || !target) return -1;
     if (target === "0000") return 0;
-    let queue = [];
-    let visited = [];
+    let queue = [[0, 0, 0, 0]];
+    let visited = new Set(["0000"]);
     let found = false;
     let count = 0;
     
-
-    queue.push([0, 0, 0, 0]);
-    visited[0] = true;
-    deadends.forEach(x => visited[x] = true);
-
+    // Mark visited deadlocks;
+    deadends.forEach(x => visited.add(x));
 
     const checkEdge = (a, b, c, d) => {
         let key = [a, b, c, d].join('');
         if (key === target) found = true;
 
-        if (!visited[key]) {
+        if (!visited.has(key)) {
             queue.push([a, b, c, d]);
-            visited[key] = true;
+            visited.add(key);
         }
     }
 
