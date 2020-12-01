@@ -9,9 +9,7 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    if (!nums || nums.length < 2) {
-        return [];
-    };
+    if (!nums || nums.length < 2) return [];
     
     let hash = new Map();
     
@@ -22,7 +20,6 @@ var twoSum = function(nums, target) {
         } else {
             hash.set(nums[i], i);
         }
-        
     }
     return null;
 };
