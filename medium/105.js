@@ -1,5 +1,5 @@
-// 106. Construct Binary Tree from Inorder and Postorder Traversal
-// Given inorder and postorder traversal of a tree, construct the binary tree.
+// 105. Construct Binary Tree from Preorder and Inorder Traversal
+// Given preorder and inorder traversal of a tree, construct the binary tree.
 
 /**
  * Definition for a binary tree node.
@@ -10,26 +10,24 @@
  * }
  */
 /**
+ * @param {number[]} preorder
  * @param {number[]} inorder
- * @param {number[]} postorder
  * @return {TreeNode}
  */
-var buildTree = function(inorder, postorder) {
+var buildTree = function(preorder, inorder) {
     let map = new Map();
     for (let i = 0; i < inorder.length; i++) map.set(inorder[i], i);
-    let pInd = postorder.length - 1;
+    let pInd = 0;
     
-    // Chect if subtree still has nodes!
-    // Right subtree always populated first
     let genTree = (lo, hi) => {
         if (lo > hi) return null;
-
-        let val = postorder[pInd];
-        pInd--;
+        let val = preorder[pInd];
+        pInd++;
+        
         let node = new TreeNode(val);
-        node.right = genTree(map.get(val) + 1, hi);
         node.left = genTree(lo, map.get(val) - 1);
+        node.right = genTree(map.get(val) + 1, hi);
         return node;
     }
-    return genTree(0, postorder.length - 1);
+    return genTree(0, inorder.length - 1);
 };
