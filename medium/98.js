@@ -5,5 +5,22 @@
 // The right subtree of a node contains only nodes with keys greater than the node's key.
 // Both the left and right subtrees must also be binary search trees.
 
-
-// Erased from the LeetCode
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST = function(root, lo = Number.NEGATIVE_INFINITY, hi = Number.POSITIVE_INFINITY) {
+    if (!root) return true;
+    if (root.val <= lo || root.val >= hi) return false;
+    let left = isValidBST(root.left, lo, root.val);
+    let right = isValidBST(root.right, root.val, hi);
+    return left && right;
+};
