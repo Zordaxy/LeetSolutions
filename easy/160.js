@@ -3,3 +3,6 @@
 
 
 // Erased from the Leetcode
+
+// 1. check both length and start compare after length delta
+// 2. mark each node as visited by: a) changing node b) mset

@@ -10,17 +10,13 @@
  * @return {boolean}
  */
 var checkIfExist = function(arr) {
-    if (!arr || !arr.length) {
-        return false;
-    }
+    if (!arr || !arr.length) return false;
+    
     let map = new Map();
     for(let i = 0; i < arr.length; i++) {
         // Important!: check both cases arr[i]*2 and arr[i]/2
-        if (map.has(arr[i]*2) || map.has(arr[i]/2)) {
-            return true;
-        } else {
-            map.set(arr[i]);
-        }
+        if (map.has(arr[i]*2) || map.has(arr[i]/2)) return true;
+        map.set(arr[i]);
     }
     return false;
 };

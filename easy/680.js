@@ -9,18 +9,16 @@ var validPalindrome = function(s) {
     let lo = 0;
     let hi = s.length - 1;
     
-    while (s[lo] === s[hi] && lo < hi) {
-        lo++;
-        hi--;
-    }
-    
-    checkPal = (lo, hi) => {
+    checkPal = (lo, hi, tries) => {
         while (s[lo] === s[hi] && lo < hi) {
             lo++;
             hi--;
         }
-        return lo >= hi;
+        
+        if (lo >= hi) return true;
+        if (!tries) return false;
+        tries--;
+        return checkPal(lo, hi - 1, tries) || checkPal(lo + 1, hi, tries)
     }
-    
-    return(checkPal(lo, hi - 1) || checkPal(lo + 1, hi));
+    return checkPal(lo, hi, 1);
 };

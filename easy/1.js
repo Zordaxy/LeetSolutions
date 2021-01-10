@@ -9,6 +9,7 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
+    // Faster way - to use 2 pointers.
     if (!nums || nums.length < 2) return [];
     
     let hash = new Map();

@@ -4,5 +4,17 @@
 // You may assume all the characters consist of printable ascii characters.
 
 
-// Was implemented with two pointers from start and end by swapping
-// Erased from the Leetcode
+/**
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+var reverseString = function(s) {
+    let lo = 0;
+    let hi = s.length - 1;
+    while (lo < hi)  {
+        [s[lo], s[hi]] = [s[hi], s[lo]];
+        lo++;
+        hi--;
+    }
+    return s;
+};

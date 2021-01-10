@@ -47,7 +47,8 @@ const withRestructure = (nums, val) => {
     
     for (let i = 0; i < nums.length; i++) {
         if (nums[i] !== val) {
-            nums[pointer++] = nums[i];
+            nums[pointer] = nums[i];
+            pointer++
         }
     }
     

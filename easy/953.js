@@ -17,16 +17,13 @@ var isAlienSorted = function(words, order) {
         let word = words[i];
         let isValid = false;
         let ind = 0;
-        while(!isValid) {
-            if (ind >= parent.length || map.get(word[ind]) > map.get(parent[ind])) {
-                isValid = true;
-            } else if (map.get(word[ind]) === map.get(parent[ind])) {
-                ind++;
-            } else {
-                break;
-            }
-        }
-        if (!isValid) return false;
+        
+            
+        while (word[ind] === parent[ind] && ind < parent.length) ind++;
+        if (ind === word.length && ind < parent.length) return false;
+        
+        
+        if (map.get(word[ind]) < map.get(parent[ind])) return false;
         parent = word;
     }
     return true;

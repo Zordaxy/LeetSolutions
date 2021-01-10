@@ -20,15 +20,13 @@ var isPalindrome = function(s) {
         return false;
     }
     
-    
     while(lo < hi) {
-        if (!isValid(lo)) lo++;
-        else if (!isValid(hi)) hi--
-        else if (s[lo] !== s[hi]) return false;
-        else {
-            lo++;
-            hi--;
-        }
+        while (!isValid(lo) && lo < hi) lo++;
+        while (!isValid(hi) && lo < hi) hi--;
+        
+        if (s[lo] !== s[hi]) return false;
+        lo++;
+        hi--;
     }
     return true;
 };

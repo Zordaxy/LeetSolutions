@@ -19,6 +19,7 @@ var isSymmetric = function(root) {
     return byReflection(root);
 };
 
+// Preferable
 function byReflection(root) {
     let queue = [root.left, root.right]
 

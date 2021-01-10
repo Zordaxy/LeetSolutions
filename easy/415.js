@@ -19,9 +19,7 @@ var addStrings = function(num1, num2) {
     let result = [];
     
     while (arr1.length || arr2.length || isPassed) {
-        let sum = (arr1.length ? +arr1.pop() : 0) 
-            + (arr2.length ? +arr2.pop() : 0)
-            + (isPassed ? 1 : 0);
+        let sum = (+arr1.pop() || 0) + (+arr2.pop() || 0) + (isPassed ? 1 : 0);
         isPassed = sum >= 10;
         result.unshift(sum % 10);
     }

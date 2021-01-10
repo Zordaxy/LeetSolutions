@@ -6,23 +6,16 @@
  * @param {number[]} A
  * @return {number[]}
  */
-var sortArrayByParity = function(A) {
+var sortArrayByParity = function (A) {
     let i = 0;
-    let j = A.length -  1;
-    
+    let j = A.length - 1;
+
     while (i < j) {
-        while(A[i]%2 === 0 && i < j) {
-            i++
-        }
-        while(A[j]%2 !== 0 && i < j) {
-            j--
-        }
-        
+        while (A[i] % 2 === 0 && i < j) i++;
+        while (A[j] % 2 !== 0 && i < j) j--;
+
         // swap
-        // [A[i],A[j]]=[A[j],A[i]];
-        let temp = A[i];
-        A[i] = A[j];
-        A[j] = temp;
+        [A[i], A[j]] = [A[j], A[i]];
         i++;
         j--;
     }

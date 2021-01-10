@@ -5,3 +5,4 @@
 
 
 // Erased from the Linkedlist
+// Simple binary search

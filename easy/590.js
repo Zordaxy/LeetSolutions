@@ -15,6 +15,7 @@
  * @return {number[]}
  */
 var postorder = function(root) {
+    // Differs from preorder by "unshift" instead of "push"
     if (!root) return [];
     let stack = [root];
     let res = [];

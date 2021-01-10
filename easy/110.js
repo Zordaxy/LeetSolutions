@@ -15,7 +15,7 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isBalanced = function(root, height = 0) {   
+var isBalanced = function(root) {   
     let check = node => {
         if(!node) return 0;
         let left = check(node.left);

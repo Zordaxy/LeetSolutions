@@ -10,3 +10,4 @@
 
 
 // Was erased from Leetcode
+// Binary search

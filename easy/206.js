@@ -13,19 +13,34 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function(head) {
-    // With recursion
+var reverseList = function (head) {
     if (!head) return head;
-    
-    let parent = head;
-    let moveNode = node => {
-        if (!node) return;
-        let next = node.next;
-        node.next = head;
-        parent.next = next;
-        head = node;
-        moveNode(parent.next);
+
+    let prev = null;
+    let cur = head;
+
+    while (cur) {
+        let next = cur.next;
+        cur.next = prev;
+
+        prev = cur;
+        cur = next;
     }
-    moveNode(head);
-    return head;
+    return prev;
 };
+
+
+// version with muving each node to head;
+//     if (!head) return head;
+
+//     let parent = head;
+//     let moveNode = node => {
+//         if (!node) return;
+//         let next = node.next;
+//         node.next = head;
+//         parent.next = next;
+//         head = node;
+//         moveNode(parent.next);
+//     }
+//     moveNode(head);
+//     return head;
