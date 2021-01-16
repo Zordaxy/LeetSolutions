@@ -21,20 +21,12 @@ var fourSum = function (nums, target) {
             let right = nums.length - 1;
 
             while (left < right) {
-                if (nums[left] === nums[left - 1] && left - 1 !== j) {
-                    left++
-                    continue;
-                }
-                if (nums[right] === nums[right + 1]) {
-                    right--;
-                    continue;
-                }
                 if (sum === nums[left] + nums[right]) {
-                    result.push([nums[i], nums[j], nums[left], nums[right]]);
-                    // skip duplicates
+                    // skip 3 and 4 duplicates
                     while (nums[left] === nums[left + 1]) left++;
                     while (nums[right] === nums[right - 1]) right--;
 
+                    result.push([nums[i], nums[j], nums[left], nums[right]]);
                     left++;
                     right--;
                     continue;
@@ -46,13 +38,13 @@ var fourSum = function (nums, target) {
                     right--;
                 }
             }
-            // skip duplicates. After action - to jump to next distinct value
+            // skip 2 duplicates. After action - to jump to next distinct value
             while (nums[j] === nums[j + 1]) j++;
         }
+        // skip 1 duplicates.
         while (nums[i] === nums[i + 1]) i++;
     }
     return result;
 };
-
 
 console.log(fourSum([1, 0, -1, 0, -2, 2], 0)); // [ [ -2, -1, 1, 2 ], [ -2, 0, 0, 2 ], [ -1, 0, 0, 1 ] ]

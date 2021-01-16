@@ -11,7 +11,6 @@ var dailyTemperatures = function (T) {
     return byStack(T);
 };
 
-// Iterate from bottom and check previous indices
 function byIndex(T) {
     let len = T.length - 1;
     let result = new Array(T);
@@ -34,6 +33,8 @@ function byIndex(T) {
 // Use stack to store those indexes we have not find answers
 // Populate result (by index from stack) only if current temperature is higher then by index from stack.
 function byStack(T)  {
+    // 1. add to stack all the elements.
+    // 2. if current el more then last in stack - set cur index to last element from stack
     let stack = [];
     let len = T.length;
     let result = new Array(len).fill(0);

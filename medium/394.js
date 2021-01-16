@@ -9,6 +9,7 @@
  * @return {string}
  */
 var decodeString = function (s) {
+    // O(maxK ^ countK ⋅ n)
     let stack = [];
 
     let execute = () => {
@@ -43,5 +44,13 @@ var decodeString = function (s) {
 
     return result;
 };
+
+// Better: with 2 stacks O(maxK⋅n):
+// Case 1) If the current character is a digit (0-9), append it to the number k.
+// Case 2) If the current character is a letter (a-z), append it to the currentString.
+// Case 3) If current character is a opening bracket [, push k and currentString intocountStack and stringStack respectively.
+// Case 4) Closing bracket ]: We must begin the decoding process
+
+
 
 console.log(decodeString("3[a2[c]]"));

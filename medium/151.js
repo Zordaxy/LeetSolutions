@@ -4,8 +4,14 @@
 // Return a string of the words in reverse order concatenated by a single space.
 //Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
 
-
 // 1. Approach: Split by ' ', reverse, join by ' '.
 // 2. Approach: 2 pointers with detecting start and end of the word
 // 3. Approach: rewerse sentence, reverse each word, reverse sentence. Love it!
-// Erased from the Leetcode
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var reverseWords = function(s) {
+    return s.split(" ").filter(x => x).reverse().join(" ");
+};

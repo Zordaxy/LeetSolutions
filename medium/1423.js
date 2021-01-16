@@ -10,18 +10,19 @@
  * @return {number}
  */
 var maxScore = function(cardPoints, k) {
+    // Sliding window
+    let start = cardPoints.length - k;
+    let end = cardPoints.length - 1;
+
     let sum = 0;
-    for (let i = 0; i < k; i++) sum += cardPoints[i];
-    
-    let start = cardPoints.length;
-    let end = k - 1;
+    for (let i = start; i <= end; i++) sum += cardPoints[i];
     let max = sum;
     
-    while (end >= 0) {
-        sum -= cardPoints[end];
-        start--;
-        end--;
-        sum += cardPoints[start];
+    while (end !== k - 1) {
+        sum -= cardPoints[start];
+        start = (start + 1) % cardPoints.length;
+        end = (end + 1) % cardPoints.length;
+        sum += cardPoints[end];
         max = Math.max(max, sum);
     }
     

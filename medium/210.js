@@ -24,33 +24,32 @@ var findOrder = function (numCourses, prerequisites) {
     }
 
     let topoOrder = [];
-    let visited = new Set();
     let tracked = new Set();
+    let curPath = new Set();
 
     let dfs = node => {
-        visited.add(node);
         // onnce we checked for circle a set of nodes - we don't have to do that again
+        if (curPath.has(node)) return true;
+        if (tracked.has(node)) return false;
+
         tracked.add(node);
+        curPath.add(node);
+
         let children = adj.get(node);
         if (children) {
             for (let i = 0; i < children.length; i++) {
-                if (tracked.has(children[i])) return true;
-                if (!visited.has(children[i])) {
-                    let isCircle = dfs(children[i]);
-                    if (isCircle) return true;
-                }
+                if (dfs(children[i])) return true;
             }
         }
 
-
-        tracked.delete(node);
+        curPath.delete(node);
         topoOrder.push(node);
         return false;
     }
 
     for (let i = 0; i < numCourses; i++) {
         // dfs(i) returns true in case of existing circle
-        if (!visited.has(i) && dfs(i)) return [];
+        if (dfs(i)) return [];
     }
 
     // No reverse as contition is about prerequisites, not dependencies

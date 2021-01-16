@@ -24,30 +24,30 @@ var canFinish = function(numCourses, prerequisites) {
     }
     
     // Dfs. Check for cicles
-    let visited = new Set();
+    let curPath = new Set();
     let tracked = new Set();
     let dfs = node => {
-        visited.add(node);
+        if (curPath.has(node)) return true;
+        if (tracked.has(node)) return false;
+        
+        curPath.add(node);
         tracked.add(node);
         
         let children = adj.get(node);
-
         for (let i = 0; i < children.length; i++) {
-            if(visited.has(children[i])) return true;
-            let isCircle = dfs(children[i]);
-            if (isCircle) return true;
+            if (dfs(children[i])) return true;
         };
         
-        visited.delete(node);
+        curPath.delete(node);
         return false;
     }
     
     for (let [v, k] of adj) {
-        if (!tracked.has(v) && dfs(v)) return false;
+        if (dfs(v)) return false;
     }
     return true;
 };
 
 
-console.log(canFinish(2, [[1,0]])); // true
-console.log(canFinish(2, [[1,0],[0,1]])); // false
+console.log(canFinish(2, [[1, 0]])); // true
+console.log(canFinish(2, [[1, 0], [0, 1]])); // false

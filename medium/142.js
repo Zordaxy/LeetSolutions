@@ -6,3 +6,8 @@
 
 // Was implemented with 2 pointers. Once cycle is found, start second slow pointer from the start.
 // Erased from the Leetcode
+
+// 3 Methods:
+// 1. By visited property
+// 2. By Set
+// 3. By fast and slow pointers. Once they met/ Start another slow pointer from the start. 2 slow pointers will met in the entry point

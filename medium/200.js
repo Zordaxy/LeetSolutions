@@ -50,6 +50,39 @@ function dfs(grid, i, j) {
     }
 }
 
+// more concise:
+// public class Solution {
+//     int y;          // The height of the given grid
+//     int x;          // The width of the given grid
+//     char[][] g;     // The given grid, stored to reduce recursion memory usage
+    
+//     public int numIslands(char[][] grid) {
+//         g = grid;
+//         int c = 0;
+//         y = g.length;
+//         if (y == 0) return 0;
+//         x = g[0].length;
+        
+//         for (int i = 0; i < y; i++) {
+//             for (int j = 0; j < x; j++) {
+//                 if (g[i][j] == '1') {
+//                     dfs(i, j);
+//                     c++;
+//                 }
+//             }
+//         }
+//         return c;
+//     }
+    
+//     private void dfs(int i, int j) {
+//         if (i < 0 || i >= y || j < 0 || j >= x || g[i][j] != '1') return;
+//         g[i][j] = '0';
+//         dfs(i + 1, j);
+//         dfs(i - 1, j);
+//         dfs(i, j + 1);
+//         dfs(i, j - 1);
+//     }
+// }
 
 // let grid = [["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]];
 let grid = [

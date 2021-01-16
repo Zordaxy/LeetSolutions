@@ -6,9 +6,15 @@
 // You may assume all tickets form at least one valid itinerary.
 // One must use all the tickets once and only once.
 
-// Eulerian path
-// Reversed DFS Postorder O(E + V)
+/**
+ * @param {string[][]} tickets
+ * @return {string[]}
+ */
 var findItinerary = function(tickets) {
+    // Eulerian path O(E + V):
+    // 1. DFS postorder
+    // 2. Delete path with adj list
+    // 3. Reverse
     let map = new Map();
     for (let i = 0; i < tickets.length; i++) {
         let [dest, arr] = tickets[i];

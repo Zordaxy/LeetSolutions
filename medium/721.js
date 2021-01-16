@@ -9,7 +9,7 @@
  */
 var accountsMerge = function (accounts) {
     // Union find (uf)
-    // Can de solved using DFS on connected components
+    // Can be solved using DFS on connected components
     let id = [...Array(accounts.length).keys()];
     let size = [];
     for (let i = 0; i < accounts.length; i++) size[i] = accounts[i].length - 1;
@@ -48,18 +48,9 @@ var accountsMerge = function (accounts) {
     for (let [email, ind] of emails) {
         let rootInd = root(ind);
 
-        if (!accs.has(rootInd)) accs.set(rootInd, []);
+        if (!accs.has(rootInd)) accs.set(rootInd, [accounts[ind][0]]);
         accs.get(rootInd).push(email);
     }
 
-    let final = [];
-    for (let [ind, acc] of accs) {
-        acc.sort();
-        acc.unshift(accounts[ind][0]);
-
-        final.push(acc)
-    }
-
-
-    return final;
+    return [...accs.values()].map(x => x.sort());
 };

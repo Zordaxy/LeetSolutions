@@ -30,8 +30,27 @@
  * @return {number}
  */
 var leftMostColumnWithOne = function(binaryMatrix) {
+    return cutRowsCols(binaryMatrix);
+};
 
-    // Better alternative -> move only one col left or one row down.
+function cutRowsCols(binaryMatrix) {
+    // cut rows and columns one by one O(M + N)
+    let [rowCount, colCount] = binaryMatrix.dimensions();
+    let row = 0;
+    let col = colCount - 1;
+    
+    while (row < rowCount && col >= 0) {
+        if (binaryMatrix.get(row, col)) {
+            col--;
+        } else {
+            row++;
+        }
+    }
+    return col !== colCount - 1 ? col + 1 : -1;
+}
+
+function binarySearch(binaryMatrix) {
+    // Binary search O(NlogN)
     let [rowCount, colCount] = binaryMatrix.dimensions();
     let colStates = Array.from(Array(rowCount).keys());
     
@@ -60,4 +79,4 @@ var leftMostColumnWithOne = function(binaryMatrix) {
     
     if (binaryMatrix.get(rowCount, lo) === 1) return lo;
     return -1;
-};
+}

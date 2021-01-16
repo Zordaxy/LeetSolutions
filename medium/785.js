@@ -21,12 +21,12 @@ var isBipartite = function(graph) {
         }
     } 
     
-    graph.forEach((x, index) => {
-        if(!group[index]) {
-            group[index] = 1;
-            dfs(index);
+    for (let i = 0; i < graph.length; i++) {
+        if(!group[i]) {
+            group[i] = 1;
+            dfs(i);
         }
-    });
+    }
 
     return result;
 };

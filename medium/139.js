@@ -10,66 +10,20 @@
  * @return {boolean}
  */
 var wordBreak = function (s, wordDict) {
-    let head = new Node();
-    let mem = new Set();
+    let set = new Set();
+    for (let word of wordDict) set.add(word);
 
-    // populate Trie
-    for (let i = 0; i < wordDict.length; i++) {
-        let cur = head;
-        let word = wordDict[i];
-        for (let j = 0; j < word.length; j++) {
-            if (!cur.children.has(word[j])) cur.children.set(word[j], new Node());
-            cur = cur.children.get(word[j]);
-            if (j === word.length - 1) cur.isWord = true;
+    let dp = new Array(s.length).fill(false);
+    for (let i = 0; i < s.length; i++) {
+        for (let j = 0; j <= i; j++) {
+            if (set.has(s.substring(j, i + 1))) {
+                // If substring (j, i) is in set and (0, j) is true in dp - set dp[i] to true
+                if (j === 0 || dp[j - 1]) dp[i] = true;
+            }
         }
     }
-
-    // backtrack
-    let backtrack = (ind, cur) => {
-        while (cur && !cur.isWord) {
-            cur = cur.children.get(s[ind]);
-            ind++;
-        }
-        if (!cur) return false;
-        if (ind === s.length && cur.isWord) return true;
-
-        let res
-        if (!mem.has(ind)) {
-            mem.add(ind);
-            res = backtrack(ind, head);
-            if (res) return true;
-        }
-
-        return backtrack(ind + 1, cur.children.get(s[ind]));
-    }
-
-    return backtrack(0, head);
+    return dp[s.length - 1];
 };
-
-class Node {
-    isWord = false;
-    children = new Map();
-}
-
-
-
-// //!!! Short solution with DP !!!
-// public class Solution {
-//     public boolean wordBreak(String s, List<String> wordDict) {
-//         Set < String > wordDictSet = new HashSet<>(wordDict);
-//         boolean[] dp = new boolean[s.length() + 1];
-//         dp[0] = true;
-//         for (int i = 1; i <= s.length(); i++) {
-//             for (int j = 0; j < i; j++) {
-//                 if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
-//                     dp[i] = true;
-//                     break;
-//                 }
-//             }
-//         }
-//         return dp[s.length()];
-//     }
-// }
 
 
 

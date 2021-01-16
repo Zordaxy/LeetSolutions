@@ -7,21 +7,18 @@
  * @return {number}
  */
 var subarraySum = function(nums, k) {
-    let map = new Map();
     let count = 0;
-    let curSum = 0;
+    let sum = 0;
+    
+    let preSum = new Map();
+    preSum.set(0, 1);
     
     for (let i = 0; i < nums.length; i++) {
-        curSum += nums[i];
-        if (curSum === k) count++;
-        if (map.has(curSum - k)) count += map.get(curSum - k);
+        sum += nums[i];
+        count += (preSum.get(sum - k) || 0);
         
-        let cur = map.get(curSum);
-        if (cur) {
-            map.set(curSum, cur + 1);
-        } else {
-            map.set(curSum, 1);
-        }
+        let preCount = preSum.get(sum) || 0;
+        preSum.set(sum, preCount + 1);
     }
     
     return count;

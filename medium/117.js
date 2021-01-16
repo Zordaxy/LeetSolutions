@@ -26,6 +26,11 @@
  * @return {Node}
  */
 var connect = function(root) {
+    //  Constant time achieved by:
+    // 1. store head oh each pevel
+    // 2. cur - parent of level.
+    // 3. prev - previous node in level or null
+    // 4. once checked cur.left and cur.right -> use cur.next to jump to next parent
     if (!root) return null;
     let queue = [root];
     
