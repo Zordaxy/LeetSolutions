@@ -12,7 +12,6 @@
 
 class Codec {
     constructor() {
-      
   }
   
   /** 
@@ -28,12 +27,10 @@ class Codec {
           let node = queue.shift();
           if (!node) {
               res.push(null);
-              continue;
+          } else {
+              res.push(node.val);
+              queue.push(...node.children, null);
           }
-          res.push(node.val);
-          
-          for (let j = 0; j < node.children.length; j++) queue.push(node.children[j]);
-          queue.push(null);
       }
       
       return res;

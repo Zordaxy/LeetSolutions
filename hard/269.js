@@ -8,76 +8,53 @@
  * @return {string}
  */
 var alienOrder = function (words) {
-    let adj = new Map();
-
     // build adj list
-    for (let i = 0; i < words.length; i++) {
-        for (let j = 0; j < words[i].length; j++) {
-            if (!adj.has(words[i][j])) adj.set(words[i][j], []);
-        }
-    }
+    let adj = new Map();
+    words.forEach(w => w.split('').forEach(ch => {
+        if (!adj.has(ch)) adj.set(ch, []);
+    }))
 
     // populate adj list
     for (let i = 0; i < words.length - 1; i++) {
-        if (words[i] === words[i + 1]) continue;
+        let left = words[i];
+        let right = words[i + 1];
         let j = 0;
-        while (words[i][j] === words[i + 1][j]) j++;
-        
-        if (words[i][j] && !words[i + 1][j]) return '';
-        if (!words[i][j] || !words[i + 1][j]) continue;
+        while (left[j] && left[j] === right[j]) j++;
 
-        adj.get(words[i][j]).push(words[i + 1][j])
+        // invalid case when "abcd is followed by "abc"
+        if (left[j] && !right[j]) return '';
+        // ignore duplicate word
+        if (!left[j] || !right[j]) continue;
+
+        adj.get(left[j]).push(right[j])
     }
-
-    if (checkForCycles(adj)) return "";
-    return topoOrder(adj);
-};
-
-function topoOrder(adj) {
-    let visited = new Set();
-    let dfsPost = [];
-    let nodes = [...adj.keys()];
 
     // topological sort
     // reversed PostOrder traversal.
-    let topoOrder = el => {
-        visited.add(el);
-        adj.get(el).forEach(child => {
-            if (!visited.has(child)) topoOrder(child);
-        });
-        dfsPost.push(el);
-    }
-
-    for (let i = 0; i < nodes.length; i++) {
-        if (!visited.has(nodes[i])) topoOrder(nodes[i]);
-    }
-    return dfsPost.reverse().join('');
-}
-
-function checkForCycles(adj) {
     let visited = new Set();
-
-    let dfs = value => {
-        if (visited.has(value)) return true;
-        visited.add(value);
-
-        let children = adj.get(value);
-        for (let i = 0; i < children.length; i++) {
-            let result = dfs(children[i]);
-            if (result) return true;
-        }
-        // Clean up after traversal!
-        visited.delete(value);
-        return false;
-    }
-
+    let curPath = new Set();
+    let dfsPost = [];
     let nodes = [...adj.keys()];
-    for (let i = 0; i < nodes.length; i++) {
-        let result = dfs(nodes[i]);
-        if (result) return true;
+    let hasCircle = false;
+
+    let topoOrder = el => {
+        if (curPath.has(el)) {
+            hasCircle = true;
+            return;
+        }
+        if (visited.has(el)) return;
+
+        visited.add(el);
+        curPath.add(el);
+
+        for (let child of adj.get(el)) topoOrder(child);
+        dfsPost.push(el);
+        curPath.delete(el);
     }
-    return false;
-}
+    for (let node of nodes) topoOrder(node);
+
+    return !hasCircle ? dfsPost.reverse().join('') : '';
+};
 
 console.log(alienOrder(["z", "x", "z"])); // ""
 console.log(alienOrder(["a", "b", "ca", "cc"])); // "abc"

@@ -5,10 +5,12 @@
  * @param {number} num
  * @return {string}
  */
-var numberToWords = function(num) {
+var numberToWords = function (num) {
     if (num === 0) return "Zero";
-    let digits = new Map([
-        ["0", ""],
+
+    let str = num.toString().split("");
+    let nums = new Map([
+        ["0", null],
         ["1", "One"],
         ["2", "Two"],
         ["3", "Three"],
@@ -19,7 +21,7 @@ var numberToWords = function(num) {
         ["8", "Eight"],
         ["9", "Nine"],
     ]);
-    
+
     let teens = new Map([
         ["10", "Ten"],
         ["11", "Eleven"],
@@ -32,10 +34,8 @@ var numberToWords = function(num) {
         ["18", "Eighteen"],
         ["19", "Nineteen"],
     ]);
-    
+
     let tens = new Map([
-        ["0", ""],
-        ["1", "Ten"],
         ["2", "Twenty"],
         ["3", "Thirty"],
         ["4", "Forty"],
@@ -44,43 +44,41 @@ var numberToWords = function(num) {
         ["7", "Seventy"],
         ["8", "Eighty"],
         ["9", "Ninety"],
-    ])
-    let arr = num.toString().split('');
-    
-    let getTuple = () => {
-        if (!arr.length) return "";
-        if (arr.length === 1) return digits.get(arr.pop());
-        
-        let digitSign = arr.pop();
-        let tenSign = arr.pop();
-        if (tenSign === "1") return teens.get(tenSign + digitSign);
-        
-        let ten = tens.get(tenSign);
-        let digit = digits.get(digitSign);
-        
-        let res = [];
-        if (ten) res.push(ten);
-        if (digit) res.push(digit);
-        return res.join(" ");
-    }
-    
-    let getTripple = name => {
-        let tuple = getTuple();
-        let hundred = arr.length ? digits.get(arr.pop()) : '';
-        
-        let res = [];
-        if (hundred) res.push(`${hundred} Hundred`);
-        if (tuple) res.push(tuple);
-        if (name && res.length) res.push(name);
+    ]);
 
-        return res.join(" ");
+
+    let getOne = () => nums.get(str.pop());
+
+    let getTwo = () => {
+        if (str.length < 2) return [getOne()];
+
+        let [second, first] = [str.pop(), str.pop()];
+        if (+first >= 2) {
+            return [tens.get(first), nums.get(second)];
+        } else if (+first >= 1) {
+            return [teens.get(first + second)];
+        } else {
+            return [nums.get(second)];
+        }
     }
-    
-    let result = [];
-    result.unshift(getTripple());
-    result.unshift(getTripple("Thousand"));
-    result.unshift(getTripple("Million"));
-    result.unshift(getTripple("Billion"));
-    
-    return result.filter(x => x !== "").join(" ");
+
+    let getThree = suffix => {
+        let result = getTwo();
+
+        if (str.length) {
+            let hund = str.pop();
+            if (+hund) result = [nums.get(hund), "Hundred", ...result];
+        }
+
+        result = result.filter(x => x);
+        if (result.length && suffix) result.push(suffix);
+        return result;
+    }
+
+    let result = getThree();
+    if (str.length) result.unshift(...getThree("Thousand"));
+    if (str.length) result.unshift(...getThree("Million"));
+    if (str.length) result.unshift(...getThree("Billion"));
+
+    return result.filter(x => x).join(" ");
 };

@@ -14,52 +14,46 @@
  * @param {number} maxWidth
  * @return {string[]}
  */
-var fullJustify = function (words, maxWidth) {
+var fullJustify = function(words, maxWidth) {
     let result = [];
-
+    
     while (words.length) {
         // determine words for line
         let remains = maxWidth;
         let selected = [words.shift()];
         remains -= selected[0].length;
-
-        while (words.length && remains - words[0].length - 1 >= 0) {
+        
+        while(words.length && remains - words[0].length - 1 >= 0) {
             remains -= words[0].length + 1;
             selected.push(words.shift());
         }
-
+        
         let line = "";
         // for last line
         if (!words.length) {
             line = selected.join(" ");
-            // for the rest
+        // for the rest
         } else {
-            let spaces = new Array(selected.length - 1);
+            
             if (selected.length > 1) {
-                let minSpaceCount = selected.length > 1 ? Math.floor(remains / (selected.length - 1)) : 0;
-                let minSpace = new Array(minSpaceCount + 1).fill(" ").join("");
-                remains = remains % (selected.length - 1);
-
-                for (let i = 0; i < spaces.length; i++) spaces[i] = minSpace;
+                let minSpaceCount = Math.floor(remains / (selected.length - 1));
+                let minSpace = " ".repeat(minSpaceCount + 1);
+                remains %= (selected.length - 1);
+        
+                let spaces = new Array(selected.length - 1).fill(minSpace);
                 let ind = 0;
-                while (remains > 0) {
-                    spaces[ind] += " ";
-                    ind++;
-                    remains--;
-                }
-
+                for (let ind = 0; remains > 0; ind++, remains--) spaces[ind] += " ";
+        
                 for (let i = 0; i < spaces.length; i++) line += selected[i] + spaces[i];
             }
-
             line += selected[selected.length - 1];
         }
-
-        // update and spaces for last line or lines with 1 word
-        while (remains) {
+        
+        while(remains){
             line += " ";
             remains--;
-        }
-
+        } 
+        
         result.push(line);
     }
     return result;
